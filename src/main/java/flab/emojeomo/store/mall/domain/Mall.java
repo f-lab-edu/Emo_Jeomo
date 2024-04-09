@@ -1,10 +1,12 @@
 package flab.emojeomo.store.mall.domain;
 
 import flab.emojeomo.global.enums.Status;
-import flab.emojeomo.global.enums.Type;
+import flab.emojeomo.global.enums.MallType;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
+@Builder
 public class Mall {
 
     @Id
@@ -15,7 +17,7 @@ public class Mall {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private MallType type;
 
     @Enumerated(EnumType.STRING)
     private Status status;
