@@ -1,7 +1,6 @@
 package flab.emojeomo.user.service;
 
 import flab.emojeomo.global.enums.BaseException;
-import flab.emojeomo.global.response.ExceptionResponseDto;
 import flab.emojeomo.global.response.ResponseType;
 import flab.emojeomo.oauth.common.OAuthProfileResponse;
 import flab.emojeomo.user.domain.Member;
@@ -11,6 +10,7 @@ import flab.emojeomo.user.dto.MemberCreateDto;
 import flab.emojeomo.user.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static flab.emojeomo.global.util.JsonWebTokenGenerator.generateJsonWebToken;
 import static flab.emojeomo.global.util.JsonWebTokenGenerator.generateRefreshToken;
@@ -40,6 +40,7 @@ public class UserService {
         return makeLoginSuccess(member.getIdx(), member.getNickname());
     }
 
+    @Transactional
     private Member createMember(MemberCreateDto memberCreateDto) {
         return memberRepository.save(memberCreateDto.createMemberEntity());
     }

@@ -4,12 +4,14 @@ import flab.emojeomo.global.enums.LoginProvider;
 import flab.emojeomo.global.enums.Rate;
 import flab.emojeomo.global.enums.Role;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
 public class Member {
     @Id
     @GeneratedValue
