@@ -10,7 +10,7 @@ public enum ResponseType {
     INVALID_PARAMETER("400002", "Invalid Argument", HttpStatus.BAD_REQUEST),
     TOKEN_EXPIRED("400003", "Token Expired", HttpStatus.BAD_REQUEST),
     INVALID_TOKEN("400004", "Invalid Token", HttpStatus.BAD_REQUEST),
-
+    INVALID_USER("400005", "Invalid User", HttpStatus.NOT_FOUND),
     ALREADY_EXIST_USER("400100", "Already Exist User", HttpStatus.BAD_REQUEST),
     UNAUTHORIZED_REQUEST("400101", "Unauthorized Request", HttpStatus.BAD_REQUEST),
 
