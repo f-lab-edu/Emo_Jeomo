@@ -3,6 +3,7 @@ package flab.emojeomo.global.util;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 
 import java.nio.charset.StandardCharsets;
@@ -10,19 +11,18 @@ import java.security.Key;
 import java.util.Date;
 
 // Json web token & refresh token 생성하는 클래스
+@Component
 public class JsonWebTokenGenerator {
     @Value("${jwt.secret}")
-    private static String salt;
+    private String salt;
 
-    private static final long validTime = 1000L * 60 * 60;
-    private static final long refreshTime = 1000L * 60 * 60 * 24 * 30;
-
-    public static Key jwtKeyGenerator() {
+    public Key jwtKeyGenerator() {
         return Keys.hmacShaKeyFor(salt.getBytes(StandardCharsets.UTF_8));
     }
 
-    public static String generateJsonWebToken(String userInfo) {
-        Claims claims = Jwts.claims().setSubject(userInfo);
+    public String generateJsonWebToken(Long userIndex) {
+        Claims claims = Jwts.claims().setSubject(userIndex.toString());
+        long validTime = 1000L * 60 * 60;
         return Jwts.builder()
                    .setClaims(claims)
                    .setIssuedAt(new Date())
@@ -31,8 +31,9 @@ public class JsonWebTokenGenerator {
                    .compact();
     }
 
-    public static String generateRefreshToken() {
+    public String generateRefreshToken() {
         Date now = new Date();
+        long refreshTime = 1000L * 60 * 60 * 24 * 30;
         Date refresh = new Date(now.getTime() + refreshTime);
         return Jwts.builder()
                    .setIssuedAt(new Date())

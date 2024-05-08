@@ -11,28 +11,31 @@ import flab.emojeomo.user.dto.LoginRequest;
 import flab.emojeomo.user.dto.LoginResponse;
 import flab.emojeomo.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @RestController
+@Slf4j
 public class UserController {
 
     private final KakaoGetAuthorization kakaoGetAuthorization;
     private final UserService userService;
 
-    @RequestMapping("/oauth/login/kakao")
-    public ResponseDto kakaoLogin(@RequestParam String authorizationCode) {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+    @GetMapping("/oauth/login/kakao")
+    public ResponseDto kakaoLogin(@RequestParam("code") String code) {
         try {
-            String accessToken = kakaoGetAuthorization.requestAccessToken(authorizationCode);
-            OAuthProfileResponse oAuthProfileResponse = kakaoGetAuthorization.requestOauthProfile(accessToken);
 
-            // redirect to 우리 서버의 회원가입 or 로그인 컨트롤러
+            String accessToken = kakaoGetAuthorization.requestAccessToken(code);
+            OAuthProfileResponse oAuthProfileResponse = kakaoGetAuthorization.requestOauthProfile(accessToken);
             LoginResponse loginResponse = userService.oauthLogin(oAuthProfileResponse);
+
             return new NormalResponseDto<>(ResponseType.OK, loginResponse);
+
         } catch (BaseException e) {
             return e.getExceptionResponseDto();
         } catch (Exception e) {
@@ -40,7 +43,7 @@ public class UserController {
         }
     }
 
-    @RequestMapping("/oauth/login")
+    @PostMapping("/oauth/login")
     public ResponseDto ourLogin (@RequestBody LoginRequest request) {
         try {
             LoginResponse loginResponse = userService.afterOauthLogin(request);

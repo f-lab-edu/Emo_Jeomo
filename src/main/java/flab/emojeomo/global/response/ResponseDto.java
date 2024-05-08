@@ -1,7 +1,9 @@
 package flab.emojeomo.global.response;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public class ResponseDto {
     protected String code;
     protected HttpStatus httpStatus;

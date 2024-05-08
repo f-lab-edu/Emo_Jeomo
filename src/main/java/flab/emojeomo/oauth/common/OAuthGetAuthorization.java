@@ -10,6 +10,6 @@ import flab.emojeomo.user.dto.LoginResponse;
  * 이것도 SRP에 따라 분리를 해놓는 것이 적합한지
  */
 public interface OAuthGetAuthorization {
-    String requestAccessToken(String authorizationToken);
+    String requestAccessToken(String accessToken);
     OAuthProfileResponse requestOauthProfile(String accessToken);
 }

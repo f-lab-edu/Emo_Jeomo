@@ -1,7 +1,9 @@
 package flab.emojeomo.global.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Getter;
 
+@Getter
 public class NormalResponseDto<T> extends ResponseDto {
 
     @JsonInclude(value = JsonInclude.Include.NON_NULL)

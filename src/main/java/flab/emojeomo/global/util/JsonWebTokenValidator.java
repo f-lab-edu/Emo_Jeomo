@@ -3,34 +3,37 @@ package flab.emojeomo.global.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
-import static flab.emojeomo.global.util.JsonWebTokenGenerator.jwtKeyGenerator;
-
-
+@RequiredArgsConstructor
+@Component
 public class JsonWebTokenValidator {
+
+    private final JsonWebTokenGenerator jsonWebTokenGenerator;
 
     public boolean isValidToken(String token) throws Exception {
         try {
             Claims claims = Jwts.parserBuilder()
-                    .setSigningKey(jwtKeyGenerator())
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+                                .setSigningKey(jsonWebTokenGenerator.jwtKeyGenerator())
+                                .build()
+                                .parseClaimsJws(token)
+                                .getBody();
             return true;
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
     }
 
-    public static String getSubject(String token) {
+    public String getSubject(String token) {
         Claims claims = parseClaims(token);
         return claims.getSubject();
     }
 
-    private static Claims parseClaims(String token) {
+    private Claims parseClaims(String token) {
         try {
             return Jwts.parserBuilder()
-                    .setSigningKey(jwtKeyGenerator())
+                    .setSigningKey(jsonWebTokenGenerator.jwtKeyGenerator())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();

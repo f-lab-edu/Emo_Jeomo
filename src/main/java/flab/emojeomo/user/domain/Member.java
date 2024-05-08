@@ -4,17 +4,21 @@ import flab.emojeomo.global.enums.LoginProvider;
 import flab.emojeomo.global.enums.Rate;
 import flab.emojeomo.global.enums.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Member {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column(length = 50)
@@ -33,6 +37,6 @@ public class Member {
 
     private int reserveSum; // 최초 생성시의 적립금은 정책상의 고정 값으로 ...
 
-    @Column(length = 200)
-    private String token;
+    private Long identifier;
+
 }
