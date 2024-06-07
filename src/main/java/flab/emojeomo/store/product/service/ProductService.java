@@ -40,5 +40,14 @@ public class ProductService {
         productRepository.save(productCreateDto.toProductEntity());
     }
 
+    // 상품 옵션 입력
+    public void createProductOption(ProductOptionCreateDto optionDto) {
+        Product product = productRepository.findById(optionDto.getProductIdx())
+                                           .orElseThrow(() -> new BaseException(ResponseType.INVALID_PRODUCT, null));
+
+        // option Entity 생성 및 save
+        ProductOption productOption = optionDto.makeProductOption(product);
+        productOptionRepository.save(productOption);
+    }
 
 }
