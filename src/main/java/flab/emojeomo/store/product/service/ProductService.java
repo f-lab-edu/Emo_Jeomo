@@ -50,4 +50,18 @@ public class ProductService {
         productOptionRepository.save(productOption);
     }
 
+    // 상품 재고 입력
+    public void createProductStock(ProductStockCreateDto stockCreateDto) {
+        // 해당 상품의 옵션이 있어? (상품은 굳이 검사하지 않음, 옵션이 있다는 것 자체가 상품이 있다는 것이므로)
+        ProductOption productOption = productOptionRepository.findById(stockCreateDto.getOptionIdx())
+                                                             .orElseThrow(() -> new BaseException(ResponseType.INVALID_PRODUCT, null));
+
+        // 재고개수의 유효성 확인
+        if (stockCreateDto.getCount() <= MIN_NUM || stockCreateDto.getCount() > MAX_STOCK) {
+            throw new BaseException(ResponseType.INVALID_NUMBER, null);
+        }
+        // 상품 재고 등록
+        ProductStock productStock = stockCreateDto.createProductStock(productOption);
+        productStockRepository.save(productStock);
+    }
 }
