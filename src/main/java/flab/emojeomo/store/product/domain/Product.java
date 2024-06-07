@@ -2,8 +2,8 @@ package flab.emojeomo.store.product.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import flab.emojeomo.global.enums.Status;
-import flab.emojeomo.store.mall.domain.Mall;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
@@ -11,14 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
 public class Product {
     @Id
     @GeneratedValue
     private Long idx;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mall_idx")
-    private Mall mall;
+    private Long mallIdx;
 
     private String name;
 
@@ -60,18 +59,18 @@ public class Product {
     }
 
     // 생성 메서드
-    public static Product createProduct(Mall mall,
+    public static Product createProduct(Long mallIdx,
                                         String name,
                                         int price,
                                         List<ProductImage> images,
                                         List<ProductTag> tags,
                                         List<ProductOption> options) {
-        Product product = new Product();
-        product.setMall(mall);
-        product.setName(name);
-        product.setPrice(price);
-        product.setCreatedDate(LocalDateTime.now());
-        product.setStatus(Status.AVAILABLE);
+        Product product = Product.builder().mallIdx(mallIdx)
+                                           .name(name)
+                                           .price(price)
+                                           .createdDate(LocalDateTime.now())
+                                           .status(Status.AVAILABLE)
+                                           .build();
 
         // 컬렉션 넣기
         for (ProductImage image : images) {
@@ -89,23 +88,4 @@ public class Product {
         return product;
     }
 
-    private void setMall(Mall mall) {
-        this.mall = mall;
-    }
-
-    private void setName(String name) {
-        this.name = name;
-    }
-
-    private void setPrice(int price) {
-        this.price = price;
-    }
-
-    private void setStatus(Status status) {
-        this.status = status;
-    }
-
-    private void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
 }

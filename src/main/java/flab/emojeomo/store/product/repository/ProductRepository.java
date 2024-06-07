@@ -1,7 +1,8 @@
 package flab.emojeomo.store.product.repository;
 
+import flab.emojeomo.store.product.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductRepository extends JpaRepository<Long, ProductRepository> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
 }
