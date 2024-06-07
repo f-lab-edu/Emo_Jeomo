@@ -5,12 +5,10 @@ import flab.emojeomo.global.response.NormalResponseDto;
 import flab.emojeomo.global.response.ResponseDto;
 import flab.emojeomo.global.response.ResponseType;
 import flab.emojeomo.store.product.dto.ProductCreateDto;
+import flab.emojeomo.store.product.dto.ProductInfoUpdateDto;
 import flab.emojeomo.store.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -33,5 +31,29 @@ public class ProductController {
         }
     }
 
+    @PutMapping
+    @RequestMapping("/seller/management/product/")
+    public ResponseDto updateProduct(@RequestBody ProductInfoUpdateDto productInfoUpdateDto) {
+        try {
+            productService.updateProductInfo(productInfoUpdateDto);
+            return new NormalResponseDto<>(ResponseType.OK, ResponseType.OK.getMessage());
+        } catch (BaseException e) {
+            return e.getExceptionResponseDto();
+        } catch (Exception e) {
+            return new ExceptionResponseDto(ResponseType.INVALID_PARAMETER, e.getMessage());
+        }
+    }
 
+    @PutMapping
+    @RequestMapping("/seller/management/product")
+    public ResponseDto deleteProduct(@RequestParam Long productIdx) {
+        try {
+            productService.deleteProduct(productIdx);
+            return new NormalResponseDto<>(ResponseType.OK, ResponseType.OK.getMessage());
+        } catch (BaseException e) {
+            return e.getExceptionResponseDto();
+        } catch (Exception e) {
+            return new ExceptionResponseDto(ResponseType.INVALID_PARAMETER, e.getMessage());
+        }
+    }
 }

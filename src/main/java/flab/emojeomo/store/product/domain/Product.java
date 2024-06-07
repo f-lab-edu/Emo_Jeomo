@@ -4,13 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import flab.emojeomo.global.enums.Status;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 @Builder
 public class Product {
     @Id
@@ -24,10 +28,14 @@ public class Product {
     private int price;
 
     @Enumerated(EnumType.STRING)
+    @Setter
     private Status status;
 
     @CreatedDate
     private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
 
     // JPA 연관관계 설정하기
     @JsonIgnore
