@@ -1,7 +1,8 @@
 package flab.emojeomo.promotion.repository;
 
+import flab.emojeomo.promotion.domain.Promotion;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PromotionRepository extends JpaRepository<Long, PromotionRepository> {
+public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 
 }

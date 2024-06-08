@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class PromotionMall {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @ManyToOne(fetch = FetchType.LAZY)

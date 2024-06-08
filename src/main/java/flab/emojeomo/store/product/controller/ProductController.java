@@ -19,7 +19,7 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    @RequestMapping("/seller/management/product")
+    @RequestMapping("/seller/management/product/registration")
     public ResponseDto registerProduct(@RequestBody ProductCreateDto productCreateDto) {
         try {
             productService.createProduct(productCreateDto);
@@ -32,7 +32,7 @@ public class ProductController {
     }
 
     @PutMapping
-    @RequestMapping("/seller/management/product/")
+    @RequestMapping("/seller/management/product/modification")
     public ResponseDto updateProduct(@RequestBody ProductInfoUpdateDto productInfoUpdateDto) {
         try {
             productService.updateProductInfo(productInfoUpdateDto);

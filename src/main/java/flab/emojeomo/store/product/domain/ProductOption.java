@@ -27,7 +27,7 @@ public class ProductOption {
     private Status status;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "product_option")
+    @OneToMany(mappedBy = "option")
     private List<ProductStock> stocks = new ArrayList<>();
 
     public void addProductStock(ProductStock stock) {

@@ -10,7 +10,7 @@ import lombok.Builder;
 public class Mall {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column(nullable = false, length = 50)

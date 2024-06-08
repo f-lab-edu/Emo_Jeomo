@@ -9,7 +9,7 @@ import lombok.Getter;
 @Builder
 public class ProductStock {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @ManyToOne(fetch = FetchType.LAZY)

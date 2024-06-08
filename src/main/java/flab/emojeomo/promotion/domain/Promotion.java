@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 public class Promotion {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Status status;
@@ -36,7 +36,7 @@ public class Promotion {
 
     private LocalDateTime finishDate; // 종료일자
 
-    @OneToMany(mappedBy = "promotionMall")
+    @OneToMany(mappedBy = "promotion")
     private List<PromotionMall> promotionMalls = new ArrayList<>();
 
     /**
